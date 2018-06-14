@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ManagementPack ContentReadable="true" SchemaVersion="1.1" OriginalSchemaVersion="1.1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<Manifest>
+		<Identity>
+			<ID>Custom.ChangeRequestAssignmentChanges.Notification</ID>
+			<Version>7.0.6555.0</Version>
+		</Identity>
+		<Name>Change Request Assignment Changes Notification Workflow</Name>
+		<References>
+			<Reference Alias="WorkItem">
+				<ID>System.WorkItem.Library</ID>
+				<Version>7.0.6555.0</Version>
+				<PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+			</Reference>
+			<Reference Alias="ChangeManagement">
+				<ID>ServiceManager.ChangeManagement.Library</ID>
+				<Version>7.0.6555.0</Version>
+				<PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+			</Reference>
+			<Reference Alias="CoreChange">
+				<ID>System.WorkItem.ChangeRequest.Library</ID>
+				<Version>7.0.6555.0</Version>
+				<PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+			</Reference>
+			<Reference Alias="SystemCenter">
+				<ID>Microsoft.SystemCenter.Subscriptions</ID>
+				<Version>7.0.6555.0</Version>
+				<PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+			</Reference>
+			<Reference Alias="EnterpriseManagement1">
+				<ID>Microsoft.EnterpriseManagement.ServiceManager.UI.Administration</ID>
+				<Version>7.0.6555.0</Version>
+				<PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+			</Reference>
+			<Reference Alias="EnterpriseManagement">
+				<ID>Microsoft.EnterpriseManagement.ServiceManager.UI.Console</ID>
+				<Version>7.0.6555.0</Version>
+				<PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+			</Reference>
+			<Reference Alias="System">
+				<ID>System.Library</ID>
+				<Version>7.0.6555.0</Version>
+				<PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+			</Reference>
+		</References>
+	</Manifest>
+	<Categories>
+		<Category ID="Category.Custom.ChangeRequestAssignmentChanges.Notification.ManagementPack" Value="EnterpriseManagement!Microsoft.EnterpriseManagement.ServiceManager.ManagementPack">
+			<ManagementPackName>Custom.ChangeRequestAssignmentChanges.Notification</ManagementPackName>
+			<ManagementPackVersion>7.0.6555.0</ManagementPackVersion>
+		</Category>
+		<Category ID="Category.ChangeRequestAssignmentChanges" Target="ChangeRequestAssignmentChanges" Value="EnterpriseManagement1!Microsoft.EnterpriseManagement.ServiceManager.Rules.WorkflowSubscriptions" />
+	</Categories>
+	<Monitoring>
+		<Rules>
+			<Rule ID="ChangeRequestAssignmentChanges" Enabled="true" Target="ChangeManagement!System.WorkItem.ChangeRequest.WorkflowTarget" ConfirmDelivery="true" Remotable="true" Priority="Normal" DiscardLevel="100">
+				<Category>System</Category>
+				<DataSources>
+					<DataSource ID="DS" TypeID="SystemCenter!Microsoft.SystemCenter.CmdbInstanceSubscription.DataSourceModule">
+						<Subscription>
+							<RelationshipSubscription RelType="$MPElement[Name='WorkItem!System.WorkItemAssignedToUser']$" SourceType="$MPElement[Name='CoreChange!System.WorkItem.ChangeRequest']$" TargetType="$MPElement[Name='System!System.Domain.User']$">
+								<AddRelationship />
+							</RelationshipSubscription>
+							<PollingIntervalInSeconds>30</PollingIntervalInSeconds>
+							<BatchSize>100</BatchSize>
+						</Subscription>
+					</DataSource>
+				</DataSources>
+				<WriteActions>
+					<WriteAction ID="WA" TypeID="SystemCenter!Microsoft.EnterpriseManagement.SystemCenter.Subscription.WindowsWorkflowTaskWriteAction">
+						<Subscription>
+							<EnableBatchProcessing>false</EnableBatchProcessing>
+							<WindowsWorkflowConfiguration>
+								<AssemblyName>Microsoft.EnterpriseManagement.WorkflowFoundation</AssemblyName>
+								<WorkflowTypeName>Microsoft.EnterpriseManagement.WorkflowFoundation.ConfigurationWorkflow</WorkflowTypeName>
+								<WorkflowParameters>
+									<WorkflowParameter Name="InstanceId" Type="guid">$Data/BaseManagedEntityId$
+									</WorkflowParameter>
+									<WorkflowArrayParameter Name="NotificationTemplateIdList" Type="guid">
+										<Item>321BD693-F6C7-8214-D23B-5CEDA0B65696</Item>
+									</WorkflowArrayParameter>
+									<WorkflowArrayParameter Name="UserRelationshipIdList" Type="guid">
+										<Item>$MPElement[Name='WorkItem!System.WorkItemAssignedToUser']$</Item>
+									</WorkflowArrayParameter>
+								</WorkflowParameters>
+								<RetryExceptions />
+								<RetryDelaySeconds>60</RetryDelaySeconds>
+								<MaximumRunningTimeSeconds>1500</MaximumRunningTimeSeconds>
+							</WindowsWorkflowConfiguration>
+						</Subscription>
+					</WriteAction>
+				</WriteActions>
+			</Rule>
+		</Rules>
+	</Monitoring>
+	<LanguagePacks>
+		<LanguagePack ID="ENU" IsDefault="true">
+			<DisplayStrings>
+				<DisplayString ElementID="Custom.ChangeRequestAssignmentChanges.Notification">
+					<Name>Custom Service Manager Change Request Assignment Changes Notification Workflow</Name>
+					<Description>Service Manager Change Request Assignment Changes Workflow</Description>
+				</DisplayString>
+				<DisplayString ElementID="ChangeRequestAssignmentChanges">
+					<Name>Change Request Assignment Notification</Name>
+				</DisplayString>
+			</DisplayStrings>
+		</LanguagePack>
+	</LanguagePacks>
+</ManagementPack>

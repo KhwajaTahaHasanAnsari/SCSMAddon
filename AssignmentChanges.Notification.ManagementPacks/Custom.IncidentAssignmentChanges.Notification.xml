@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ManagementPack ContentReadable="true" SchemaVersion="1.1" OriginalSchemaVersion="1.1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  <Manifest>
+    <Identity>
+      <ID>Custom.IncidentAssignmentChanges.Notification</ID>
+      <Version>7.0.6555.0</Version>
+    </Identity>
+    <Name>Incident Assignment Changes Notification Workflow</Name>
+    <References>
+      <Reference Alias="WorkItem">
+        <ID>System.WorkItem.Library</ID>
+        <Version>7.0.6555.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+      <Reference Alias="Incident">
+        <ID>ServiceManager.IncidentManagement.Library</ID>
+        <Version>7.0.6555.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+      <Reference Alias="CoreIncident">
+        <ID>System.WorkItem.Incident.Library</ID>
+        <Version>7.0.6555.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+      <Reference Alias="SystemCenter">
+        <ID>Microsoft.SystemCenter.Library</ID>
+        <Version>7.0.6555.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+      <Reference Alias="SystemCenter1">
+        <ID>Microsoft.SystemCenter.Subscriptions</ID>
+        <Version>7.0.6555.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+      <Reference Alias="Administration">
+        <ID>Microsoft.EnterpriseManagement.ServiceManager.UI.Administration</ID>
+        <Version>7.0.6555.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+      <Reference Alias="System">
+        <ID>System.Library</ID>
+        <Version>7.0.6555.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+    </References>
+  </Manifest>
+  <Categories>
+    <Category ID="IncidentConfigurationMPSolutionCategory" Value="Incident!Microsoft.EnterpriseManagement.ServiceManager.ManagementPack.Solution.IncidentManagement">
+      <ManagementPackName>Custom.IncidentAssignmentChanges.Notification</ManagementPackName>
+      <ManagementPackVersion>7.0.6555.0</ManagementPackVersion>
+    </Category>
+    <Category ID="Category.IncidentAssignmentChanges" Target="IncidentAssignmentChanges" Value="Administration!Microsoft.EnterpriseManagement.ServiceManager.Rules.WorkflowSubscriptions" />
+  </Categories>
+  <Monitoring>
+    <Rules>
+      <Rule ID="IncidentAssignmentChanges" Enabled="true" Target="SystemCenter!Microsoft.SystemCenter.SubscriptionWorkflowTarget" ConfirmDelivery="false" Remotable="true" Priority="Normal" DiscardLevel="100">
+        <Category>Discovery</Category>
+        <DataSources>
+          <DataSource ID="DS" TypeID="SystemCenter1!Microsoft.SystemCenter.CmdbInstanceSubscription.DataSourceModule">
+            <Subscription>
+              <RelationshipSubscription RelType="$MPElement[Name='WorkItem!System.WorkItemAssignedToUser']$" SourceType="$MPElement[Name='CoreIncident!System.WorkItem.Incident']$" TargetType="$MPElement[Name='System!System.Domain.User']$">
+                <AddRelationship></AddRelationship>
+              </RelationshipSubscription>
+              <PollingIntervalInSeconds>30</PollingIntervalInSeconds>
+              <BatchSize>100</BatchSize>
+            </Subscription>
+          </DataSource>
+        </DataSources>
+        <WriteActions>
+          <WriteAction ID="WA" TypeID="SystemCenter1!Microsoft.EnterpriseManagement.SystemCenter.Subscription.WindowsWorkflowTaskWriteAction">
+            <Subscription>
+              <EnableBatchProcessing>true</EnableBatchProcessing>
+              <WindowsWorkflowConfiguration>
+                <AssemblyName>Microsoft.EnterpriseManagement.ServiceManager.Incident.Workflows</AssemblyName>
+                <WorkflowTypeName>Microsoft.EnterpriseManagement.ServiceManager.Incident.Workflows.AutomaticIncidentChangeWorkflow</WorkflowTypeName>
+                <WorkflowParameters>
+                  <WorkflowArrayParameter Name="InstanceIds" Type="guid">
+                    <Item>$Data/BaseManagedEntityId$</Item>
+                  </WorkflowArrayParameter>
+                  <WorkflowParameter Name="NotificationRulesEnabled" Type="boolean">True</WorkflowParameter>
+                  <WorkflowArrayParameter Name="NotificationTemplates" Type="guid">
+                    <Item>782F86C8-62E2-6A0A-57AD-CE7664F8529F</Item>
+					<Item>16FBB858-634F-1732-9D44-92F161F10706</Item>
+                  </WorkflowArrayParameter>
+                  <WorkflowArrayParameter Name="UserAliasOrRelationships" Type="string">
+                    <Item>15e577a3-6bf9-6713-4eac-ba5a5b7c4722</Item>
+					<Item>DFF9BE66-38B0-B6D6-6144-A412A3EBD4CE</Item>
+				  </WorkflowArrayParameter>
+                </WorkflowParameters>
+                <RetryExceptions />
+                <RetryDelaySeconds>60</RetryDelaySeconds>
+                <MaximumRunningTimeSeconds>1500</MaximumRunningTimeSeconds>
+              </WindowsWorkflowConfiguration>
+            </Subscription>
+          </WriteAction>
+        </WriteActions>
+      </Rule>
+    </Rules>
+  </Monitoring>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        <DisplayString ElementID="Custom.IncidentAssignmentChanges.Notification">
+		  <Name>Custom Service Manager Incident Assignment Changes Notification Workflow</Name>
+		  <Description>Service Manager Incident Assignment Changes Workflow</Description>
+        </DisplayString>
+        <DisplayString ElementID="IncidentAssignmentChanges">
+          <Name>Incident Assignement Notification</Name>
+        </DisplayString>
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+</ManagementPack>

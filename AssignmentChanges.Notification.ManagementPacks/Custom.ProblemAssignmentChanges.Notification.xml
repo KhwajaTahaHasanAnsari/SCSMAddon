@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ManagementPack ContentReadable="true" SchemaVersion="1.1" OriginalSchemaVersion="1.1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+	<Manifest>
+		<Identity>
+			<ID>Custom.ProblemAssignmentChanges.Notification</ID>
+			<Version>7.0.6555.0</Version>
+		</Identity>
+		<Name>Problem Assignment Changes Notification Workflow</Name>
+		<References>
+			<Reference Alias="WorkItem">
+				<ID>System.WorkItem.Library</ID>
+				<Version>7.0.6555.0</Version>
+				<PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+			</Reference>
+			<Reference Alias="Problem">
+				<ID>ServiceManager.ProblemManagement.Library</ID>
+				<Version>7.0.6555.0</Version>
+				<PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+			</Reference>
+			<Reference Alias="CoreProblem">
+				<ID>System.WorkItem.Problem.Library</ID>
+				<Version>7.0.6555.0</Version>
+				<PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+			</Reference>
+			<Reference Alias="SystemCenter">
+				<ID>Microsoft.SystemCenter.Library</ID>
+				<Version>7.0.6555.0</Version>
+				<PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+			</Reference>
+			<Reference Alias="SystemCenter1">
+				<ID>Microsoft.SystemCenter.Subscriptions</ID>
+				<Version>7.0.6555.0</Version>
+				<PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+			</Reference>
+			<Reference Alias="Administration">
+				<ID>Microsoft.EnterpriseManagement.ServiceManager.UI.Administration</ID>
+				<Version>7.0.6555.0</Version>
+				<PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+			</Reference>
+			<Reference Alias="System">
+				<ID>System.Library</ID>
+				<Version>7.0.6555.0</Version>
+				<PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+			</Reference>
+		</References>
+	</Manifest>
+	<Categories>
+		<Category ID="ProblemConfigurationMPSolutionCategory" Value="Problem!Microsoft.EnterpriseManagement.ServiceManager.ManagementPack.Solution.ProblemManagement">
+			<ManagementPackName>Custom.ProblemAssignmentChanges.Notification</ManagementPackName>
+			<ManagementPackVersion>7.0.6555.0</ManagementPackVersion>
+		</Category>
+		<Category ID="Category.ProblemAssignmentChanges" Target="ProblemAssignmentChanges" Value="Administration!Microsoft.EnterpriseManagement.ServiceManager.Rules.WorkflowSubscriptions" />
+	</Categories>
+	<Monitoring>
+		<Rules>
+			<Rule ID="ProblemAssignmentChanges" Enabled="true" Target="SystemCenter!Microsoft.SystemCenter.SubscriptionWorkflowTarget" ConfirmDelivery="false" Remotable="true" Priority="Normal" DiscardLevel="100">
+				<Category>Discovery</Category>
+				<DataSources>
+					<DataSource ID="DS" TypeID="SystemCenter1!Microsoft.SystemCenter.CmdbInstanceSubscription.DataSourceModule">
+						<Subscription>
+							<RelationshipSubscription RelType="$MPElement[Name='WorkItem!System.WorkItemAssignedToUser']$" SourceType="$MPElement[Name='CoreProblem!System.WorkItem.Problem']$" TargetType="$MPElement[Name='System!System.Domain.User']$">
+								<AddRelationship></AddRelationship>
+							</RelationshipSubscription>
+							<PollingIntervalInSeconds>30</PollingIntervalInSeconds>
+							<BatchSize>100</BatchSize>
+						</Subscription>
+					</DataSource>
+				</DataSources>
+				<WriteActions>
+					<WriteAction ID="WA" TypeID="SystemCenter1!Microsoft.EnterpriseManagement.SystemCenter.Subscription.WindowsWorkflowTaskWriteAction">
+						<Subscription>
+							<EnableBatchProcessing>true</EnableBatchProcessing>
+							<WindowsWorkflowConfiguration>
+								<AssemblyName>Microsoft.EnterpriseManagement.ServiceManager.Incident.Workflows</AssemblyName>
+								<WorkflowTypeName>Microsoft.EnterpriseManagement.ServiceManager.Incident.Workflows.AutomaticIncidentChangeWorkflow</WorkflowTypeName>
+								<WorkflowParameters>
+									<WorkflowArrayParameter Name="InstanceIds" Type="guid">
+										<Item>$Data/BaseManagedEntityId$</Item>
+									</WorkflowArrayParameter>
+									<WorkflowParameter Name="NotificationRulesEnabled" Type="boolean">True</WorkflowParameter>
+									<WorkflowArrayParameter Name="NotificationTemplates" Type="guid">
+										<Item>BE177FCE-EEB1-D903-929C-30040AC424AD</Item>
+									</WorkflowArrayParameter>
+									<WorkflowArrayParameter Name="UserAliasOrRelationships" Type="string">
+										<Item>15e577a3-6bf9-6713-4eac-ba5a5b7c4722</Item>
+									</WorkflowArrayParameter>
+								</WorkflowParameters>
+								<RetryExceptions />
+								<RetryDelaySeconds>60</RetryDelaySeconds>
+								<MaximumRunningTimeSeconds>1500</MaximumRunningTimeSeconds>
+							</WindowsWorkflowConfiguration>
+						</Subscription>
+					</WriteAction>
+				</WriteActions>
+			</Rule>
+		</Rules>
+	</Monitoring>
+	<LanguagePacks>
+		<LanguagePack ID="ENU" IsDefault="true">
+			<DisplayStrings>
+				<DisplayString ElementID="Custom.ProblemAssignmentChanges.Notification">
+					<Name>Custom Service Manager Problem Assignment Changes Notification Workflow</Name>
+					<Description>Service Manager Problem Assignment Changes Workflow</Description>
+				</DisplayString>
+				<DisplayString ElementID="ProblemAssignmentChanges">
+					<Name>Problem Assignement Notification</Name>
+				</DisplayString>
+			</DisplayStrings>
+		</LanguagePack>
+	</LanguagePacks>
+</ManagementPack>
