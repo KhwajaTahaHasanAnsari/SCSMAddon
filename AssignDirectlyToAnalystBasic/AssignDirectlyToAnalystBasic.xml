@@ -1,0 +1,146 @@
+﻿<ManagementPack ContentReadable="true" SchemaVersion="1.1" OriginalSchemaVersion="1.1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  <Manifest>
+    <Identity>
+      <ID>AssignDirectlyToAnalystBasic</ID>
+      <Version>7.0.6555.95</Version>
+    </Identity>
+    <Name>Assign Directly To Analyst Basic</Name>
+    <References>
+      <Reference Alias="Console">
+        <ID>Microsoft.EnterpriseManagement.ServiceManager.UI.Console</ID>
+        <Version>7.0.6555.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+      <Reference Alias="Alias_85817d8e_83db_4bdf_be53_9d546661a43e">
+        <ID>System.WorkItem.Library</ID>
+        <Version>7.0.6555.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+      <Reference Alias="AdminItem.Library">
+        <ID>System.AdminItem.Library</ID>
+        <Version>7.0.6555.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+      <Reference Alias="System">
+        <ID>System.Library</ID>
+        <Version>7.0.6555.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+      <Reference Alias="WorkItem">
+        <ID>System.WorkItem.Incident.Library</ID>
+        <Version>7.0.6555.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+    </References>
+  </Manifest>
+  <TypeDefinitions>
+    <EntityTypes>
+      <ClassTypes>
+        <ClassType ID="AssignSettingsClass" Accessibility="Public" Abstract="false" Base="AdminItem.Library!System.SolutionSettings" Hosted="false" Singleton="true" Extension="false">
+          <Property ID="AssignDomain1" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="250" MinLength="0" Required="false" MinValue="0" MaxValue="2147483647" />
+          <Property ID="AssignGroup1" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="250" MinLength="0" Required="false" MinValue="0" MaxValue="2147483647" />
+          <Property ID="AssignDomain2" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="250" MinLength="0" Required="false" MinValue="0" MaxValue="2147483647" />
+          <Property ID="AssignGroup2" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="250" MinLength="0" Required="false" MinValue="0" MaxValue="2147483647" />
+          <Property ID="AssignDomain3" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="250" MinLength="0" Required="false" MinValue="0" MaxValue="2147483647" />
+          <Property ID="AssignGroup3" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="250" MinLength="0" Required="false" MinValue="0" MaxValue="2147483647" />
+          <Property ID="AssignShowAccount" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="1" MinLength="0" Required="false" MinValue="0" MaxValue="1" />
+          <Property ID="AssignShowTier" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="1" MinLength="0" Required="false" MinValue="0" MaxValue="1" />
+          <Property ID="AssignedUserAlias" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="250" MinLength="0" Required="false" MinValue="0" MaxValue="2147483647" />
+          <Property ID="ActionLogAlias" Type="string" AutoIncrement="false" Key="false" CaseSensitive="false" MaxLength="250" MinLength="0" Required="false" MinValue="0" MaxValue="2147483647" />
+        </ClassType>
+      </ClassTypes>
+    </EntityTypes>
+  </TypeDefinitions>
+  <Categories>    
+    <Category ID="Category.DoubleClickAssignSetting" Target="ConsoleTask.AssignSettings.Edit" Value="Console!Microsoft.EnterpriseManagement.ServiceManager.UI.Console.DoubleClickTask" />
+    <Category ID="AssignBasicCategory" Value="Console!Microsoft.EnterpriseManagement.ServiceManager.ManagementPack">
+      <ManagementPackName>AssignDirectlyToAnalystBasic</ManagementPackName>
+      <ManagementPackVersion>1.0.0.0</ManagementPackVersion>      
+      <ManagementPackPublicKeyToken>ddc84f6817a821a9</ManagementPackPublicKeyToken>
+    </Category>
+    <Category ID="Category.AssignImageBasic16x16" Target="Image.AssignBasic.16x16" Value="System!System.Internal.ManagementPack.Images.u16x16Icon" />
+  </Categories>
+  <Presentation>
+    <ConsoleTasks>
+      <ConsoleTask ID="ConsoleTask.Assign.Directly.To.Analyst.Basic.Click" Accessibility="Public" Enabled="true" Target="WorkItem!System.WorkItem.Incident" RequireOutput="false">
+        <Assembly>Console!SdkDataAccessAssembly</Assembly>
+        <Handler>Microsoft.EnterpriseManagement.UI.SdkDataAccess.ConsoleTaskHandler</Handler>
+        <Parameters>
+          <Argument Name="Assembly">AssignDirectlyToAnalystBasic</Argument>
+          <Argument Name="Type">AssignDirectlyToAnalystBasic.AssignDirectlyToAnalyst</Argument>
+        </Parameters>
+      </ConsoleTask>
+      <ConsoleTask ID="ConsoleTask.AssignSettings.Edit" Accessibility="Public" Enabled="true" Target="AssignSettingsClass" RequireOutput="false">
+        <Assembly>Console!SdkDataAccessAssembly</Assembly>
+        <Handler>Microsoft.EnterpriseManagement.UI.SdkDataAccess.ConsoleTaskHandler</Handler>
+        <Parameters>
+          <Argument Name="Assembly">AssignDirectlyToAnalystBasic</Argument>
+          <Argument Name="Type">AssignDirectlyToAnalystBasic.AssignDirectlyToAnalystSettings</Argument>
+        </Parameters>
+      </ConsoleTask>
+    </ConsoleTasks>
+    <ImageReferences>
+      <ImageReference ElementID="ConsoleTask.Assign.Directly.To.Analyst.Basic.Click" ImageID="Image.AssignBasic.16x16" />
+      <ImageReference ElementID="AssignSettingsClass" ImageID="Image.AssignBasic.16x16" />
+      <ImageReference ElementID="ConsoleTask.AssignSettings.Edit" ImageID="Image.AssignBasic.16x16" />
+    </ImageReferences>
+  </Presentation>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        <DisplayString ElementID="ConsoleTask.Assign.Directly.To.Analyst.Basic.Click">
+          <Name>Assign Directly</Name>
+          <Description>Assign a single Incident from a list of IT Analysts</Description>
+        </DisplayString>
+        <DisplayString ElementID="ConsoleTask.AssignSettings.Edit">
+          <Name>Assign Directly Settings Task</Name>
+          <Description>Settings for the Assign To Analyst Basic Task</Description>
+        </DisplayString>
+        <DisplayString ElementID="Category.DoubleClickAssignSetting">
+          <Name>Assign Directly Settings Task Category</Name>
+          <Description>Settings for the Assign To Analyst Basic Task</Description>
+        </DisplayString>
+        <DisplayString ElementID="AssignDirectlyToAnalystBasic">
+          <Name>Incident assignment directly to analyst task (basic)</Name>
+          <Description>Contains custom task for assigning incidents directly to analysts rather than searching AD</Description>
+        </DisplayString>
+        <DisplayString ElementID="AssignBasicCategory">
+          <Name>Assign Directly</Name>
+        </DisplayString>
+        <DisplayString ElementID="AssignSettingsClass">
+          <Name>Settings for Assign To Analyst Task</Name>
+          <Description>Settings for Assign To Analyst Task</Description>        
+        </DisplayString>
+         <DisplayString ElementID="AssignSettingsClass" SubElementID="AssignDomain1">
+          <Name>Assign Domain 1</Name>
+        </DisplayString>
+        <DisplayString ElementID="AssignSettingsClass" SubElementID="AssignDomain2">
+          <Name>Assign Domain 2</Name>
+        </DisplayString>
+        <DisplayString ElementID="AssignSettingsClass" SubElementID="AssignDomain3">
+          <Name>Assign Domain 3</Name>
+        </DisplayString>
+        <DisplayString ElementID="AssignSettingsClass" SubElementID="AssignGroup1">
+          <Name>Assign Group 1</Name>
+        </DisplayString>
+        <DisplayString ElementID="AssignSettingsClass" SubElementID="AssignGroup2">
+          <Name>Assign Group 2</Name>
+        </DisplayString>
+        <DisplayString ElementID="AssignSettingsClass" SubElementID="AssignGroup3">
+          <Name>Assign Group 3</Name>
+        </DisplayString>
+        <DisplayString ElementID="AssignSettingsClass" SubElementID="AssignShowAccount">
+          <Name>Assign Show Account</Name>
+        </DisplayString>
+        <DisplayString ElementID="AssignSettingsClass" SubElementID="AssignShowTier">
+          <Name>Assign Show Tier</Name>
+        </DisplayString>
+      </DisplayStrings>
+    </LanguagePack>   
+  </LanguagePacks>
+  <Resources>
+    <Assembly ID="AssignDirectlyToAnalystBasic.dll" Accessibility="Public" FileName="AssignDirectlyToAnalystBasic.dll" HasNullStream="false" QualifiedName="AssignDirectlyToAnalystBasic"/>
+    <Image ID="Image.AssignBasic.16x16" Accessibility="Public" FileName="Image.Assign.16x16.png" />
+  </Resources>
+</ManagementPack>
+
