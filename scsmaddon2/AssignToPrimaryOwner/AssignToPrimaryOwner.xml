@@ -1,0 +1,72 @@
+﻿<ManagementPack ContentReadable="true" SchemaVersion="2.0" OriginalSchemaVersion="1.1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  <Manifest>
+    <Identity>
+      <ID>AssignToPrimaryOwner</ID>
+      <Version>1.0.0.1</Version>
+    </Identity>
+    <Name>AssignToPrimaryOwner</Name>
+    <References>
+      <Reference Alias="System">
+        <ID>System.Library</ID>
+        <Version>7.5.8501.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+      <Reference Alias="Console">
+        <ID>Microsoft.EnterpriseManagement.ServiceManager.UI.Console</ID>
+        <Version>7.5.2905.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+      <Reference Alias="IncidentLibrary">
+        <ID>System.WorkItem.Incident.Library</ID>
+        <Version>7.0.5826.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+      <Reference Alias="Administration">
+        <ID>Microsoft.EnterpriseManagement.ServiceManager.UI.Administration</ID>
+        <Version>7.0.5826.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+      <Reference Alias="IncidentManagementLibrary">
+        <ID>ServiceManager.IncidentManagement.Library</ID>
+        <Version>7.5.2905.0</Version>
+        <PublicKeyToken>31bf3856ad364e35</PublicKeyToken>
+      </Reference>
+    </References>
+  </Manifest>
+  <Categories>
+    <Category ID="AssignToPrimaryOwner.Category" Value="Console!Microsoft.EnterpriseManagement.ServiceManager.ManagementPack">
+      <ManagementPackName>AssignToPrimaryOwner</ManagementPackName>
+      <ManagementPackVersion>1.0.0.0</ManagementPackVersion>
+    </Category>
+  </Categories>
+  <Presentation>
+    <ConsoleTasks>
+      <ConsoleTask ID="AssignToPrimaryOwnerTask" Accessibility="Public" Enabled="true" Target="IncidentManagementLibrary!System.WorkItem.Incident.AssignGroup.Task" RequireOutput="false">
+        <Assembly>Console!SdkDataAccessAssembly</Assembly>
+        <Handler>Microsoft.EnterpriseManagement.UI.SdkDataAccess.ConsoleTaskHandler</Handler>
+        <Parameters>
+          <Argument Name="Assembly">AddPrimaryOwner</Argument>
+          <Argument Name="Type">AddPrimaryOwner.AssignToPrimaryOwner</Argument>
+        </Parameters>
+      </ConsoleTask>
+    </ConsoleTasks>
+    <ImageReferences>
+      <ImageReference ElementID="AssignToPrimaryOwnerTask" ImageID="Administration!Microsoft.EnterpriseManagement.ServiceManager.UI.Administration.Image.UserRole" />
+    </ImageReferences>
+  </Presentation>
+  <LanguagePacks>
+    <LanguagePack ID="ENU" IsDefault="true">
+      <DisplayStrings>
+        <DisplayString ElementID="AssignToPrimaryOwner">
+          <Name>Assign To Primary Owner</Name>
+        </DisplayString>
+        <DisplayString ElementID="AssignToPrimaryOwnerTask">
+          <Name>Assign to me Primary Owner</Name>
+        </DisplayString>
+      </DisplayStrings>
+    </LanguagePack>
+  </LanguagePacks>
+  <Resources>
+    <Assembly ID="AddPrimaryOwnerrdl" Accessibility="Public" FileName="AddPrimaryOwner.dll" HasNullStream="false" QualifiedName="AddPrimaryOwner" />
+  </Resources>
+</ManagementPack>
